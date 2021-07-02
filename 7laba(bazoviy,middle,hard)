@@ -1,0 +1,109 @@
+//3вариант.Базовый уровень.Дано число N (> 0) и набор из N чисел. Создать стек, содержащий исходные числа (последнее число будет вершиной стека), и вывести указатель на его вершину.
+//3вариант.Средний уровень.Создать стек строковых значений, для реализации используя односвязные списки. Реализовать операции добавления (push) и удаления (pop) элемента из стека. Добавьте в стек строки «abc», «fx», «glc», «hi», «gogo» и распечатайте содержимое стека. Удалите один элемент из стека, затем добавьте строку «the end» и распечатайте содержимое стека еще раз. Найдите количество строк в стеке, состоящих из 2 символов.
+//3вариант.Высокий уровень.Дана последовательность скобок вида «(», «)», «[», «]», «{», «}».
+//Правильными скобочными последовательностями называются пустая последовательность, а также «(P)», «[P]», «{P}», 
+//где P – некоторая правильная последовательность. Например «{}()[]» и «{[][()()]}()» – правильные скобочные последовательности, а «(]», «[()» и «({)}» – неправильные. Определите является ли
+//заданная строка правильным скобочным выражением. Подсказка: обработайтепо очереди все символы входной строки, помещая открывающие скобки в стек,
+//а для закрывающих скобок извлекайте открывающую скобку из стека и проверяйте, соответствуют ли они друг другу.
+
+#include <iostream>
+#include <map>
+#include <stack>
+#include <list>
+
+using namespace std;
+
+struct Scob {
+    int id;
+    char value;
+};
+
+void task1() {
+    stack<int> stack1;
+    for (int i = 0; i < 10; i++) {
+        stack1.push(i);
+    }
+    int* top = &stack1.top();
+    cout << top << endl;
+}
+void task2() {
+    stack <string> stack2;
+    stack2.push("abc");
+    stack2.push("fx");
+    stack2.push("glc");
+    stack2.push("hi");
+    stack2.push("gogo");
+    cout << "Realize by stack" << endl;
+    while (!stack2.empty())
+    {
+        cout << stack2.top()<<"\t";
+        stack2.pop();
+    }
+    cout << endl;
+    stack2.push("the end");
+    while (!stack2.empty())
+    {
+        cout << stack2.top() << "\t";
+        stack2.pop();
+    }
+    cout << endl;
+    cout << "Realize by list" << endl;
+    list<string> list1;
+    list1.push_back("abc");
+    list1.push_back("fx");
+    list1.push_back("glc");
+    list1.push_back("hi");
+    list1.push_back("gogo");
+    for (string str : list1) {
+        cout << str<<"\t";
+    }
+    cout << endl;
+    list1.pop_back();
+    list1.push_back("the end");
+    for (string str : list1) {
+        cout << str << "\t";
+    }
+    cout << endl;
+}
+
+
+void task3Stack() {
+    string str;
+    int lastId = 0;
+    cout << "Enter sequence of parentheses:" << endl;
+    cin >> str;
+    map<char, char> mp{ { '(', ')' }, { '[', ']' }, { '{', '}'} };
+    std::stack<char> stk;
+    int i = 0;
+    for (i = 0; i < str.size(); ++i)
+    {
+        if ('(' == str[i] || '[' == str[i] || '{' == str[i])
+        {
+            stk.push(str[i]);
+        }
+        else if (!stk.empty())
+        {
+            char c = stk.top();
+            stk.pop();
+            if (mp[c] != str[i])
+            {
+                break;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+    std::cout << (i == str.size() && stk.empty() ? "OK" : "FAIL") << std::endl;
+   
+}
+
+int main()
+{
+    //task1();
+    //task2();
+    task3Stack();
+
+}
+
